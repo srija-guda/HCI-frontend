@@ -6,6 +6,7 @@ class ViewProfileHousehelp extends StatefulWidget {
   @override
   State<ViewProfileHousehelp> createState() => _MyHomePageState();
 }
+
 class _MyHomePageState extends State<ViewProfileHousehelp> {
   final double profileHeight = 100;
   final double coverHeight = 150;
@@ -18,6 +19,15 @@ class _MyHomePageState extends State<ViewProfileHousehelp> {
     final double top = coverHeight - profileHeight / 2;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: c2,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: c1),
+          onPressed: () {
+            Navigator.pop(context); // Takes you back to the previous screen
+          },
+        ),
+      ),
       body: Column(
         children: [
           Stack(
@@ -33,69 +43,60 @@ class _MyHomePageState extends State<ViewProfileHousehelp> {
           ),
           const SizedBox(height: 70),
           Center(
-              child: Column(
+              child: Column(children: [
+            Text(
+              '<Househelp Name>',
+              style: TextStyle(
+                fontFamily: 'Albert Sans',
+                fontSize: 20,
+                color: c1,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              '+91 12345 67890',
+              style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 15,
+                color: c3,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(height: 20),
+            Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center, // optional, centers the row
                   children: [
-                    Text(
-                      '<Househelp Name>',
-                      style: TextStyle(
-                        fontFamily: 'Albert Sans',
-                        fontSize: 20,
-                        color: c1,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      '+91 12345 67890',
-                      style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontSize: 15,
-                        color: c3,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center, // optional, centers the row
-                          children: [
-                            Image.asset('assets/images/toilet.png', scale: 2),
-                            SizedBox(width: 20),
-                            Image.asset('assets/images/gardening.png', scale: 2),
-                            SizedBox(width: 20),
-                            Image.asset('assets/images/cooking.png', scale: 2),
-                          ],
-                        ),
-                      ),
-                    ),
-
-
-                  ]
-
-              )
-
-          )
-
+                    Image.asset('assets/images/toilet.png', scale: 2),
+                    SizedBox(width: 20),
+                    Image.asset('assets/images/gardening.png', scale: 2),
+                    SizedBox(width: 20),
+                    Image.asset('assets/images/cooking.png', scale: 2),
+                  ],
+                ),
+              ),
+            ),
+          ]))
         ],
       ),
     );
   }
 
-
   Widget buildProfCoverImage() => Container(
-    color: c2,
-    width: double.infinity,
-    height: coverHeight,
-  );
+        color: c2,
+        width: double.infinity,
+        height: coverHeight,
+      );
 
   Widget buildProfProfileImage() => CircleAvatar(
-    radius: profileHeight / 2,
-    backgroundColor: c2,
-    backgroundImage: const NetworkImage(
-      'https://a0.anyrgb.com/pngimg/1600/696/user-login-linux-kernel-answer-user-profile-chen-account-login-github-thumbnail-avatar.png',
-    ),
-  );
+        radius: profileHeight / 2,
+        backgroundColor: c2,
+        backgroundImage: const NetworkImage(
+          'https://a0.anyrgb.com/pngimg/1600/696/user-login-linux-kernel-answer-user-profile-chen-account-login-github-thumbnail-avatar.png',
+        ),
+      );
 }
-

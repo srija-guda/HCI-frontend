@@ -8,11 +8,12 @@ class LangScreen extends StatefulWidget {
   @override
   State<LangScreen> createState() => _MyHomePageState();
 }
+
 class _MyHomePageState extends State<LangScreen> {
   final Color c1 = Color(0xFF2F2071); //fonts
   FlutterTts flutterTts = FlutterTts();
-@override
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     configureTts();
   }
@@ -31,44 +32,38 @@ class _MyHomePageState extends State<LangScreen> {
   bool isHindiSelected = false;
   bool isEnglishSelected = false;
   bool isTeluguSelected = false;
+  String? selectedLanguage;
 
   void toggleSelection(String language) {
-    String speakTextValue = "";
     setState(() {
-      if (language == 'hindi') {
-        isHindiSelected = !isHindiSelected;
-        speakTextValue = 'Hindi';
-      } else if (language == 'english') {
-        isEnglishSelected = !isEnglishSelected;
-        speakTextValue = 'English';
-
-      } else if (language == 'telugu') {
-        isTeluguSelected = !isTeluguSelected;
-        speakTextValue = 'Telugu';
-
+      if (selectedLanguage == language) {
+        selectedLanguage = null; // Unselect if tapped again
+      } else {
+        selectedLanguage = language;
+        speakText(language[0].toUpperCase() +
+            language.substring(1)); // Capitalize first letter
       }
     });
-    if(isEnglishSelected || isHindiSelected || isTeluguSelected)
-      {
-        speakText(speakTextValue);
-      }
   }
 
-  Widget buildLanguageButton(String imagePath, bool isSelected, String language) {
-    return InkWell(onTap: () => toggleSelection(language),
-    child: Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            border: isSelected ? Border.all(color: Colors.blue, width: 4) : null,
-            borderRadius: BorderRadius.circular(10),
+  Widget buildLanguageButton(String imagePath, String language) {
+    bool isSelected = selectedLanguage == language;
+    return InkWell(
+      onTap: () => toggleSelection(language),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border:
+                  isSelected ? Border.all(color: Colors.blue, width: 4) : null,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Image.asset(imagePath, scale: 1.5),
           ),
-          child: Image.asset(imagePath, scale: 1.5),
-        ),
-        if (isSelected)
-          Opacity(
-            opacity: 0.3,
+          if (isSelected)
+            Opacity(
+              opacity: 0.3,
               child: Container(
                 width: 100,
                 height: 128,
@@ -76,10 +71,10 @@ class _MyHomePageState extends State<LangScreen> {
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(10),
                 ),
-              )
-          )
-      ],
-    ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 
@@ -89,32 +84,32 @@ class _MyHomePageState extends State<LangScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/images/front_pic.png',
-              scale: 2.0),
+          Image.asset('assets/images/front_pic.png', scale: 2.0),
           //const SizedBox(height: 10),
-          Center(child: Text(
-            'Pick a Language',
-            style: TextStyle(
-              fontFamily: 'Albert Sans',
-              fontSize: 30,
-              color: c1,
-              fontWeight: FontWeight.w700,
+          Center(
+            child: Text(
+              'Pick a Language',
+              style: TextStyle(
+                fontFamily: 'Albert Sans',
+                fontSize: 30,
+                color: c1,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-          ),
           const SizedBox(height: 20),
-          Center(child:
-            Row(
+          Center(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                buildLanguageButton('assets/images/hindi.png', isHindiSelected, 'hindi'),
+                buildLanguageButton('assets/images/hindi.png', 'hindi'),
                 const SizedBox(width: 50),
-                buildLanguageButton('assets/images/english.png', isEnglishSelected, 'english'),
+                buildLanguageButton('assets/images/english.png', 'english'),
               ],
             ),
           ),
           const SizedBox(height: 20),
-          buildLanguageButton('assets/images/telugu.png', isTeluguSelected, 'telugu'),
+          buildLanguageButton('assets/images/telugu.png', 'telugu'),
           const SizedBox(height: 20),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -128,17 +123,15 @@ class _MyHomePageState extends State<LangScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const AreYouScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const AreYouScreen()),
                     );
                   },
-
                   child: const Text('Next'),
                 ),
-              )
-          ),
+              )),
         ],
       ),
     );
   }
 }
-

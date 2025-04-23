@@ -54,19 +54,19 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           // Button on top of image
           Positioned(
-            top: 600,
-            right: 25,
+            bottom: 70,
+            right: 40,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: c1,
                 foregroundColor: Colors.white,
               ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LangScreen()),
-                  );
-                },
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LangScreen()),
+                );
+              },
               child: const Text('Next'),
             ),
           ),
@@ -74,5 +74,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
 }

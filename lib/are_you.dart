@@ -44,18 +44,21 @@ class _MyHomePageState extends State<AreYouScreen> {
     String speakTextValue = "";
     setState(() {
       if (job == 'faculty') {
-        isFacultySelected = !isFacultySelected;
+        isFacultySelected = true;
+        isHousehelpSelected = false;
         speakTextValue = 'Faculty or Staff';
-        if (isFacultySelected) speakText(speakTextValue);
       } else if (job == 'househelp') {
-        isHousehelpSelected = !isHousehelpSelected;
+        isFacultySelected = false;
+        isHousehelpSelected = true;
         speakTextValue = 'Househelp';
-        if (isHousehelpSelected) speakText(speakTextValue);
       }
     });
+
+    speakText(speakTextValue);
   }
 
-  Widget buildLanguageButton(String imagePath, bool isSelected, String language) {
+  Widget buildLanguageButton(
+      String imagePath, bool isSelected, String language) {
     return InkWell(
       onTap: () => toggleSelection(language),
       child: Stack(
@@ -63,7 +66,8 @@ class _MyHomePageState extends State<AreYouScreen> {
         children: [
           Container(
             decoration: BoxDecoration(
-              border: isSelected ? Border.all(color: Colors.blue, width: 4) : null,
+              border:
+                  isSelected ? Border.all(color: Colors.blue, width: 4) : null,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Image.asset(imagePath, scale: 1.5),
@@ -88,79 +92,89 @@ class _MyHomePageState extends State<AreYouScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: 50, width: 20,),
-          Container(
-            width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.only(left: 16.0, bottom: 8.0),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 50,
+              width: 20,
+            ),
+            Container(
+              width: double.infinity,
+              child: Padding(
+                padding: EdgeInsets.only(left: 16.0, bottom: 8.0),
+                child: Text(
+                  'I am a ...',
+                  style: TextStyle(
+                    fontFamily: 'Albert Sans',
+                    fontSize: 38,
+                    color: c1,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            buildLanguageButton(
+                'assets/images/faculty.png', isFacultySelected, 'faculty'),
+            const SizedBox(height: 10),
+            Center(
               child: Text(
-                'I am a ...',
+                'Faculty/Staff',
                 style: TextStyle(
                   fontFamily: 'Albert Sans',
-                  fontSize: 38,
+                  fontSize: 30,
                   color: c1,
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ),
-          ),
-          buildLanguageButton('assets/images/faculty.png', isFacultySelected, 'faculty'),
-          const SizedBox(height: 10),
-          Center(
-            child: Text(
-              'Faculty/Staff',
-              style: TextStyle(
-                fontFamily: 'Albert Sans',
-                fontSize: 30,
-                color: c1,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          const SizedBox(height: 30),
-          buildLanguageButton('assets/images/househelp.png', isHousehelpSelected, 'househelp'),
-          const SizedBox(height: 10),
-          Center(
-            child: Text(
-              'Househelp',
-              style: TextStyle(
-                fontFamily: 'Albert Sans',
-                fontSize: 30,
-                color: c1,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          const SizedBox(height: 30),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: c1,
-                  foregroundColor: Colors.white,
+            const SizedBox(height: 30),
+            buildLanguageButton('assets/images/househelp.png',
+                isHousehelpSelected, 'househelp'),
+            const SizedBox(height: 10),
+            Center(
+              child: Text(
+                'Househelp',
+                style: TextStyle(
+                  fontFamily: 'Albert Sans',
+                  fontSize: 30,
+                  color: c1,
+                  fontWeight: FontWeight.w700,
                 ),
-                onPressed: () {
-                  if (isFacultySelected) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const EditProfileProf()),
-                    );
-                  } else if (isHousehelpSelected) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Skills()),
-                    );
-                  }
-                },
-                child: const Text('Next'),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 30),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: c1,
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    if (isFacultySelected) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditProfileProf()),
+                      );
+                    } else if (isHousehelpSelected) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Skills()),
+                      );
+                    }
+                  },
+                  child: const Text('Next'),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
